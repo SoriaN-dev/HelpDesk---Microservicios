@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      containers:
+        - name: traefik
+          image: traefik:3.6.6
+          args:
+            - "--api.insecure=true"
+            - "--api.dashboard=true"
+            - "--metrics.prometheus.addServicesLabels=true"
+            - "--metrics.prometheus.addRoutersLabels=true"
+            - "--metrics.prometheus.addEntryPointsLabels=true"
+            - "--entrypoints.traefik.address=:8080"
+            - "--entrypoints.http.address=:8888"
+            - "--entrypoints.metrics.address=:8082"
+            - "--providers.consulcatalog=true"
+            - "--providers.consulcatalog.refreshinterval=5s"
+            - "--providers.consulcatalog.exposedbydefault=false"
+            - "--providers.consulcatalog.endpoint.address=consul:8500"
+            - "--metrics.prometheus=true"
+            - "--metrics.prometheus.entrypoint=metrics"
+          ports:
+            - name: http
+              containerPort: 8888
+            - name: admin
+              containerPort: 8080
+            - name: metrics
+              containerPort: 8082
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8888
+    - name: admin
+      port: 8080
+      targetPort: 8080
+    - name: metrics
+      port: 8082
+      targetPort: 8082
+  selector:
+    app: traefik
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: traefik
+spec:
+  to:
+    kind: Service
+    name: traefik
+  port:
+    targetPort: http
+  tls:
+    termination: edge

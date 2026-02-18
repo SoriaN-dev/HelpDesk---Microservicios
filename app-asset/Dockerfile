@@ -1,0 +1,8 @@
+FROM eclipse-temurin:21.0.9_10-jre-alpine-3.23
+ENV LANGUAGE='en_US:en'
+RUN mkdir /app
+WORKDIR /app
+
+COPY build/libs/*.jar app.jar
+
+CMD [ "java", "-jar","app.jar" ]

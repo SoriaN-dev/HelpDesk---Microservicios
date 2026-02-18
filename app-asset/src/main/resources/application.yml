@@ -1,0 +1,46 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: app-asset
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pweb
+    username: postgres
+    password: admin
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        tags:
+          - framework=springboot-4.0.1
+          - traefik.enable=true
+          - traefik.http.routers.asset.rule=PathPrefix(`/app-asset`)
+          - traefik.http.middlewares.asset-stripprefix.stripPrefix.prefixes=/app-asset
+          - traefik.http.routers.asset.middlewares=asset-stripprefix
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+  jpa:
+    properties:
+      hibernate:
+        default_schema: app_asset
+  flyway:
+    schemas: app_asset
+    create-schemas: true
+    default-schema: app_asset
+    enabled: true
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    config-url: /app-asset/v3/api-docs/swagger-config
+    url: /app-asset/v3/api-docs
+  openapi:
+    servers:
+      - url: http://localhost/app-asset
+
+
+
