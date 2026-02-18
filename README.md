@@ -33,18 +33,31 @@
 - Entorno local con Docker Compose (Consul, Traefik, Grafana)
 - Swagger de cada microservicio
 
+### OpenShift - traefik
 ![OpenShift - traefik](./docs/images/openshift-deployments.png)
+### [OpenShift - app-employee
 ![OpenShift - app-employee](./docs/images/openshift-app-employee.png)
+### OpenShift - app-asset
 ![OpenShift - app-asset](./docs/images/openshift-app-asset.png)
+### OpenShift - app-ticket
 ![OpenShift - app-ticket](./docs/images/openshift-app-ticket.png)
+### OpenShift - grafana
 ![OpenShift - grafana](./docs/images/openshift-grafana.png)
+### OpenShift - traefik
 ![OpenShift - traefik](./docs/images/openshift-traefik.png)
+### Docker Compose - consul
 ![Docker Compose - consul](./docs/images/docker-consul.png)
+### Docker Compose - traefik
 ![Docker Compose - traefik](./docs/images/docker-traefik.png)
+### Docker Compose - grafana
 ![Docker Compose - grafana](./docs/images/docker-grafana.png)
+### Swagger - app-employee
 ![Swagger - app-employee](./docs/images/swagger-app-employee.png)
+### Swagger - app-asseT
 ![Swagger - app-asset](./docs/images/swagger-app-asset.png)
+### Swagger - app-ticket
 ![Swagger - app-ticket](./docs/images/swagger-app-ticket.png)
+### Diagrama de Base de Dato
 ![Diagrama de Base de Datos](./docs/images/database-erd.png)
 
 ## Arquitectura
